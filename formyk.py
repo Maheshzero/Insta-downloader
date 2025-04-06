@@ -71,7 +71,7 @@ if insta_url:
             st.error(f"Error: {e}")
 st.markdown(
     """
-    <div style="position: fixed; bottom: 30px; right: 15px; opacity: 0.6; font-size: 13px;">
+    <div style=" bottom: 30px; left: 15px; opacity: 0.6; font-size: 13px;">
         A SRK sambhavam 🔥
     </div>
     """,
