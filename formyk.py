@@ -3,48 +3,41 @@ import yt_dlp
 import os
 from io import BytesIO
 
-st.set_page_config(page_title="Instagram Downloader", layout="centered")
-st.title("📥 Instagram Video Downloader (Direct to Browser)")
+st.set_page_config(page_title="Instagram Downloader ", layout="centered")
+st.title("📥 Instagram Video Downloader")
 
-url = st.text_input("Paste Instagram post/reel/video link:")
+insta_url = st.text_input("Paste the Instagram post/reel/video URL:")
 
-if url:
-    with st.spinner("Fetching video info..."):
+if insta_url:
+    with st.spinner("Grabbing video details..."):
         try:
-            # Fetch metadata
-            ydl_opts_info = {'quiet': True, 'skip_download': True}
-            with yt_dlp.YoutubeDL(ydl_opts_info) as ydl:
-                info = ydl.extract_info(url, download=False)
-                formats = info.get("formats", [])
+            ydl_info_opts = {'quiet': True, 'skip_download': True}
+            with yt_dlp.YoutubeDL(ydl_info_opts) as ydl:
+                info = ydl.extract_info(insta_url, download=False)
+                all_formats = info.get("formats", [])
 
-            # Filter video formats
-            video_formats = [
-                f for f in formats if f.get('vcodec') != 'none'
-            ]
+            video_formats = [f for f in all_formats if f.get('vcodec') != 'none']
 
             if not video_formats:
                 st.warning("No downloadable video formats found.")
             else:
-                # Show format options
-                quality_labels = []
-                for f in video_formats:
-                    height = f.get('height', '?')
-                    size = round(f.get('filesize', 0) / 1024 / 1024, 2) if f.get('filesize') else '?'
-                    label = f"{f['format_id']} - {height}p - {size} MB"
-                    quality_labels.append(label)
+                quality_options = []
+                for fmt in video_formats:
+                    height = fmt.get('height', '?')
+                    size = round(fmt.get('filesize', 0) / 1024 / 1024, 2) if fmt.get('filesize') else '?'
+                    label = f"{fmt['format_id']} - {height}p - {size} MB"
+                    quality_options.append(label)
 
-                selected_quality = st.selectbox("Choose video quality:", quality_labels)
-                selected_format = video_formats[quality_labels.index(selected_quality)]
+                choice = st.selectbox("Choose video quality:", quality_options)
+                selected_format = video_formats[quality_options.index(choice)]
 
                 if st.button("Download"):
-                    st.info("Downloading... please wait")
+                    st.info("Starting download...")
 
-                    # Generate safe filename
                     raw_title = info.get("title", "instagram_video")
-                    safe_title = "".join(c if c.isalnum() or c in " ._-" else "_" for c in raw_title)
-                    filename = f"{safe_title}.mp4"
+                    clean_title = "".join(c if c.isalnum() or c in " ._-" else "_" for c in raw_title)
+                    filename = f"{clean_title}.mp4"
 
-                    # Download to temp file
                     ydl_download_opts = {
                         'format': f"{selected_format['format_id']}+bestaudio[ext=m4a]/best",
                         'merge_output_format': 'mp4',
@@ -54,26 +47,33 @@ if url:
 
                     try:
                         with yt_dlp.YoutubeDL(ydl_download_opts) as ydl:
-                            ydl.download([url])
-                    except Exception as e:
-                        st.error(f"Download failed: {e}")
-                        raise e
+                            ydl.download([insta_url])
+                    except Exception as err:
+                        st.error(f"Download failed: {err}")
+                        raise err
 
-                    # Confirm file exists and load into memory
                     if os.path.exists(filename):
                         with open(filename, "rb") as f:
-                            video_bytes = f.read()
+                            video_data = f.read()
                         os.remove(filename)
 
-                        st.success("✅ Video ready! Click below to download:")
+                        st.success("Video is ready! Click below to save it:")
                         st.download_button(
-                            label="📥 Download Now",
-                            data=video_bytes,
+                            label="📥 Download Video",
+                            data=video_data,
                             file_name=filename,
                             mime="video/mp4"
                         )
                     else:
-                        st.error("❌ Video file not found after download.")
+                        st.error("Something went wrong. Video file not found.")
 
         except Exception as e:
-            st.error(f"❌ Error: {e}")
+            st.error(f"Error: {e}")
+st.markdown(
+    """
+    <div style="position: fixed; bottom: 30px; right: 15px; opacity: 0.6; font-size: 13px;">
+        A SRK sambhavam 🔥
+    </div>
+    """,
+    unsafe_allow_html=True
+)
