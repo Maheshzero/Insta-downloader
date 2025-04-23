@@ -69,11 +69,4 @@ if insta_url:
 
         except Exception as e:
             st.error(f"Error: {e}")
-st.markdown(
-    """
-    <div style=" bottom: 30px; left: 15px; opacity: 0.6; font-size: 13px;">
-        A SRK sambhavam 🔥
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+
