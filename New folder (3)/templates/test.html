@@ -2,12 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Video Downloader</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 100px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        .form-control {
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 16px;
+        }
+        .btn {
+            width: 100%;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <form action="/submit" method="POST">
-        <input type="text" name="link" placeholder="Enter your username" required>
-        <button type="submit">Submit</button>
+
+    <div class="container">
+        <h2 class="title">Instagram Video Downloader</h2>
+        <form action="/submit" method="POST">
+            <div class="form-group">
+                <input type="text" name="link" class="form-control" placeholder="Enter Instagram video URL" required>
+            </div>
+            <button type="submit" class="btn">Download Video</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS & Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
