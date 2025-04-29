@@ -28,14 +28,4 @@ You can use the app directly from the following link:
 
 [Instagram Video Downloader - Streamlit](https://downloadeverything.streamlit.app/)
 
----
 
-## 🖥️ How to Run Locally
-
-If you'd like to run the app locally, follow these steps:
-
-1. **Clone the repo:**
-
-   ```bash
-   git clone https://github.com/your-username/instagram-downloader
-   cd instagram-downloader
